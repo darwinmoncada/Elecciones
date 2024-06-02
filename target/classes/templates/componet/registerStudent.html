@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Estudiante</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/registerStudent.css">
+    <style>
+        .btn-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Mostrar botones solo si se está editando un estudiante (ID no nulo) -->
+    <div th:if="${student != null && student.id != null}" class="btn-container">
+        <a href="/admin/dashboard" class="btn btn-secondary">
+            <i class="material-icons">home</i> Ir al Home
+        </a>
+        <a href="/admin/students/list" class="btn btn-secondary">
+            <i class="material-icons">list</i> Lista de Estudiantes
+        </a>
+    </div>
+
+    <h2 class="mt-3">Registro de Estudiante</h2>
+    <form id="studentForm" action="/admin/students/save" method="post">
+        <!-- Campo oculto para el ID -->
+        <input type="hidden" id="id" name="id" th:value="${student != null ? student.id : ''}">
+        <!-- Campo oculto para la bandera de inserción/edición -->
+        <input type="hidden" id="isEdit" name="isEdit" th:value="${student != null && student.id != null ? 'true' : 'false'}">
+
+        <!-- Campo para el Nombre -->
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required
+                   th:value="${student != null ? student.nombre : ''}"
+                   th:placeholder="${student == null ? 'Digite el nombre' : ''}">
+        </div>
+        <!-- Campo para el Documento -->
+        <div class="form-group">
+            <label for="documento">Documento:</label>
+            <input type="text" class="form-control" id="documento" name="documento" required
+                   th:value="${student != null ? student.documento : ''}"
+                   th:placeholder="${student == null ? 'Digite el documento' : ''}">
+        </div>
+        <!-- Botón de envío del formulario -->
+        <button type="submit" class="btn btn-primary mb-5 mt-2">
+            <i class="material-icons">save</i> Guardar
+        </button>
+    </form>
+
+    <div class="container">
+        <h2 class="mt-3">Cargar Estudiantes desde Excel</h2>
+        <form action="/admin/students/upload" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="file">Seleccionar Archivo Excel:</label>
+                <input type="file" class="form-control-file" id="file" name="file" accept=".xlsx, .xls">
+            </div>
+            <button type="submit" class="btn btn-primary mb-5">
+                <i class="material-icons">upload</i> Cargar
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap JS (jQuery dependency) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

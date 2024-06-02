@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Estudiantes</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/dashboard.css">
+    <link rel="stylesheet" href="/listEstudent.css">
+    <style>
+        /* Estilos personalizados */
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .btn-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="btn-container">
+        <a href="/admin/dashboard" class="btn btn-secondary">
+            <i class="material-icons">arrow_back</i> Volver
+        </a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Listar Estudiantes</h1>
+    <!-- Barra de búsqueda -->
+    <div class="search-bar">
+        <input id="buscar" type="text" class="form-control" placeholder="Buscar Estudiantes..." onkeyup="doSearch()">
+    </div>
+    <!-- Tabla de Estudiantes -->
+    <table id="datos" class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Documento</th>
+            <th>voto</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.nombre}"></td>
+            <td th:text="${student.documento}"></td>
+            <td th:text="${student.yaVoto}"></td>
+
+            <td>
+                <a th:href="@{/admin/students/edit/{id}(id=${student.id})}" class="btn btn-primary">
+                    <i class="material-icons">edit</i> Editar
+                </a>
+                <a th:href="@{/admin/students/delete/{id}(id=${student.id})}" class="btn btn-danger">
+                    <i class="material-icons">delete</i> Eliminar
+                </a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function doSearch() {
+        var tableReg = document.getElementById('datos');
+        var searchText = document.getElementById('buscar').value.toLowerCase();
+        var cellsOfRow = "";
+        var found = false;
+        var compareWith = "";
+
+        for (var i = 1; i < tableReg.rows.length; i++) {
+            cellsOfRow = tableReg.rows[i].getElementsByTagName('td');
+            found = false;
+            for (var j = 0; j < cellsOfRow.length && !found; j++) {
+                compareWith = cellsOfRow[j].innerHTML.toLowerCase();
+                if (searchText.length == 0 || (compareWith.indexOf(searchText) > -1)) {
+                    found = true;
+                }
+            }
+            if (found) {
+                tableReg.rows[i].style.display = '';
+            } else {
+                tableReg.rows[i].style.display = 'none';
+            }
+        }
+    }
+</script>
+</body>
+</html>

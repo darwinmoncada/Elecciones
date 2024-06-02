@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Candidatos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+        /* Estilos para el encabezado */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #f8f9fa; /* Color de fondo */
+            border-bottom: 2px solid #ccc; /* Borde inferior */
+        }
+
+        .header-text {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-text h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333; /* Color del texto */
+        }
+
+        .material-icons {
+            font-size: 28px;
+            margin-right: 10px;
+            color: #333; /* Color de los iconos */
+        }
+        /* Estilos para imágenes */
+        .card-img-top {
+            height: 200px; /* Altura deseada para las imágenes */
+            object-fit: cover; /* Para que las imágenes se ajusten correctamente */
+        }
+
+        /* Estilo para resaltar el radiobotón seleccionado */
+        .card-selected {
+            border: 2px solid blue;
+        }
+
+        /* Estilos para el modal */
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .modal-card {
+            width: 370px;
+            background: white;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px;
+            border-radius: 40px;
+            background-color: hsl(120deg 20% 95%);
+            box-shadow: 17px 17px 34px 0px rgb(124, 134, 124),
+            inset -8px -8px 16px 0px rgba(117, 133, 117, 0.7),
+            inset 0px 14px 28px 0px hsl(120deg 20% 95%);
+        }
+
+        .modal-card .title {
+            color: black;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .modal-card .description {
+            color: black;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-card .prefs {
+            color: blue;
+            font-size: .8em;
+            margin-bottom: 20px;
+        }
+
+        .modal-card .actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-card button {
+            color: white;
+            border: none;
+            background: none;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .modal-card .decline {
+            color: rgb(255, 0, 0);
+            box-shadow: 4px 4px 8px 0px rgb(134, 124, 124),
+            inset -8px -8px 16px 0px rgba(92, 92, 92, 0.7),
+            inset 0px 14px 28px 0px hsl(120deg 20% 95%);
+        }
+
+        .modal-card .valid {
+            color: rgb(0, 156, 0);
+            box-shadow: 4px 4px 8px 0px rgb(124, 134, 125),
+            inset -8px -8px 16px 0px rgba(121, 121, 121, 0.7),
+            inset 0px 14px 28px 0px hsl(120deg 20% 95%);
+        }
+
+        .modal-card .decline:hover {
+            color: white;
+            background-color: rgb(255, 0, 0);
+            box-shadow: 4px 4px 8px 0px rgb(134, 124, 124),
+            inset -8px -8px 16px 0px rgba(134, 20, 20, 0.7),
+            inset 0px 14px 28px 0px hsl(120deg 20% 95%);
+        }
+
+        .modal-card .valid:hover {
+            color: white;
+            background-color: rgb(0, 156, 0);
+            box-shadow: 4px 4px 8px 0px rgb(124, 134, 125),
+            inset -8px -8px 16px 0px rgba(47, 134, 20, 0.7),
+            inset 0px 14px 28px 0px hsl(120deg 20% 95%);
+        }
+    </style>
+</head>
+<body>
+<div class="modal-container" id="modalContainer" style="display: none;">
+    <div class="modal-card" id="confirmationModal">
+        <span class="title">Confirmación de Voto</span>
+        <p class="description" id="confirmationMessage">¿Estás seguro de votar por este candidato?</p>
+        <div class="actions">
+            <button class="decline" id="cancelVote">Cancelar</button>
+            <button class="valid" id="confirmVote">Aceptar</button>
+        </div>
+    </div>
+</div>
+
+<header>
+    <div class="header-text">
+        <span class="material-icons">account_circle</span> <!-- Icono de usuario -->
+        <h2>Bienvenido <span th:text="${student.nombre}"></span></h2>
+    </div>
+    <div>
+        <!-- Otros iconos de Google si es necesario -->
+    </div>
+</header><h1 class="text-center mt-3">Selección de Candidatos</h1>
+<div class="container">
+    <form action="/votar/votar" method="post">
+        <input type="hidden" name="studentId" th:value="${student.id}">
+        <h2 class="mt-4">Personería</h2>
+        <div class="row">
+            <!-- Tarjetas de candidatos para Personería -->
+            <div class="col-md-3 mb-4 d-flex justify-content-center" th:each="candidato : ${candidates}" th:if="${candidato.categoria == 'Personería'}">
+                <label class="card">
+                    <input type="radio" name="personeria" th:value="${candidato.id}" style="display: none;">
+                    <div class="card-body">
+                        <img class="card-img-top" th:src="'data:image/jpeg;base64,' + ${candidato.fotoBase64}" alt="Foto del candidato">
+                        <h5 class="card-title" th:text="${candidato.nombre}"></h5>
+                        <p class="card-text" th:text="${candidato.eslogan}"></p>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <h2 class="mt-4">Secretario</h2>
+        <div class="row">
+            <!-- Tarjetas de candidatos para Secretario -->
+            <div class="col-md-3 mb-4 d-flex justify-content-center" th:each="candidato : ${candidates}" th:if="${candidato.categoria == 'Secretario'}">
+                <label class="card">
+                    <input type="radio" name="secretario" th:value="${candidato.id}" style="display: none;">
+                    <div class="card-body">
+                        <img class="card-img-top" th:src="'data:image/jpeg;base64,' + ${candidato.fotoBase64}" alt="Foto del candidato">
+                        <h5 class="card-title" th:text="${candidato.nombre}"></h5>
+                        <p class="card-text" th:text="${candidato.eslogan}"></p>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-5 mb-5 ">Votar</button>
+    </form>
+    <!-- Input oculto para guardar el ID seleccionado -->
+    <input type="hidden" id="candidatoSeleccionado" name="candidatoSeleccionado">
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cardLabels = document.querySelectorAll('.card');
+
+        cardLabels.forEach(label => {
+            label.addEventListener('click', function(event) {
+                const radioBtn = this.querySelector('input[type="radio"]');
+                const nombreCandidato = this.querySelector('.card-title').innerText;
+                const categoria = this.closest('.col-md-3').querySelector('input[type="radio"]').name;
+
+                // Desmarcar otros radio buttons de la misma categoría
+                const otrosRadioButtons = document.querySelectorAll('input[type="radio"][name="' + categoria + '"]');
+                otrosRadioButtons.forEach(btn => {
+                    if (btn !== radioBtn) {
+                        btn.checked = false;
+                        btn.closest('.card').classList.remove('card-selected');
+                    }
+                });
+
+                // Mostrar modal solo si el radio button no está ya seleccionado
+                if (!radioBtn.checked) {
+                    const confirmationModal = document.getElementById("modalContainer");
+                    const confirmationMessage = document.getElementById("confirmationMessage");
+
+                    confirmationMessage.innerText = "¿Estás seguro de votar por " + nombreCandidato + " para el puesto de " + categoria + "?";
+                    confirmationModal.style.display = "flex"; // Mostrar el modal
+
+                    const confirmVoteHandler = function() {
+                        radioBtn.checked = true;
+                        label.classList.add('card-selected');
+                        document.getElementById("candidatoSeleccionado").value = radioBtn.value;
+                        confirmationModal.style.display = "none"; // Ocultar el modal
+                        document.getElementById("confirmVote").removeEventListener("click", confirmVoteHandler);
+                        document.getElementById("cancelVote").removeEventListener("click", cancelVoteHandler);
+                    };
+
+                    const cancelVoteHandler = function() {
+                        confirmationModal.style.display = "none"; // Ocultar el modal
+                        document.getElementById("confirmVote").removeEventListener("click", confirmVoteHandler);
+                        document.getElementById("cancelVote").removeEventListener("click", cancelVoteHandler);
+                    };
+
+                    document.getElementById("confirmVote").addEventListener("click", confirmVoteHandler);
+                    document.getElementById("cancelVote").addEventListener("click", cancelVoteHandler);
+                }
+
+                // Detener la propagación del evento click en el radiobotón
+                event.stopPropagation();
+            });
+        });
+    });
+</script>
+
+
+
+</body>
+</html>
+

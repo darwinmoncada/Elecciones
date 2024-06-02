@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Candidato</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Google Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .btn-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Mostrar botones solo si se está editando un candidato (ID no nulo) -->
+    <div th:if="${candidate != null && candidate.id != null}" class="btn-container">
+        <a href="/admin/dashboard" class="btn btn-secondary">
+            <i class="material-icons">home</i> Ir al Home
+        </a>
+        <a href="/admin/listar_candidatos" class="btn btn-secondary">
+            <i class="material-icons">list</i> Lista de Candidatos
+        </a>
+    </div>
+
+    <h2 class="mt-3">Editar Candidato</h2>
+    <form id="candidateForm" action="/admin/updateCandidate" method="post" enctype="multipart/form-data">
+        <!-- Campo oculto para el ID -->
+        <input type="hidden" id="id" name="id" th:value="${candidate != null ? candidate.id : ''}">
+
+        <!-- Campo para el Nombre -->
+        <div class="form-group">
+            <label for="nombreCandidato">Nombre del Candidato:</label>
+            <input type="text" class="form-control" id="nombreCandidato" name="nombreCandidato"
+                   th:value="${candidate != null ? candidate.nombre : ''}" required>
+        </div>
+        <!-- Campo para el Eslogan -->
+        <div class="form-group">
+            <label for="eslogan">Eslogan:</label>
+            <input type="text" class="form-control" id="eslogan" name="eslogan"
+                   th:value="${candidate != null ? candidate.eslogan : ''}" required>
+        </div>
+        <!-- Campo para la Categoría -->
+        <div class="form-group">
+            <label for="categoria">Categoría:</label>
+            <input type="text" class="form-control" id="categoria" name="categoria"
+                   th:value="${candidate != null ? candidate.categoria : ''}" required>
+        </div>
+        <!-- Campo para la Foto del Candidato -->
+        <div class="form-group">
+            <label for="fotoCandidato">Foto del Candidato:</label>
+            <input type="file" class="form-control-file" id="fotoCandidato" name="fotoCandidato" accept="image/png">
+            <img id="fotoPreview" src="#" alt="Vista previa de la foto" style="display: none; max-width: 100px; margin-top: 10px;">
+        </div>
+        <!-- Botón de envío del formulario -->
+        <button type="submit" class="btn btn-primary mb-5 mt-2">
+            <i class="material-icons">save</i> Guardar Cambios
+        </button>
+    </form>
+</div>
+
+<!-- Bootstrap JS (jQuery dependency) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- JavaScript para mostrar valores en la consola -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('candidateForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evitar el envío del formulario para mostrar los valores
+
+            const id = document.getElementById('id').value;
+            const nombreCandidato = document.getElementById('nombreCandidato').value;
+            const eslogan = document.getElementById('eslogan').value;
+            const categoria = document.getElementById('categoria').value;
+            const fotoCandidato = document.getElementById('fotoCandidato').files[0];
+
+            console.log('ID:', id);
+            console.log('Nombre del Candidato:', nombreCandidato);
+            console.log('Eslogan:', eslogan);
+            console.log('Categoría:', categoria);
+            console.log('Foto del Candidato:', fotoCandidato);
+
+            // Luego de mostrar los valores, puedes enviar el formulario
+            this.submit(); // Descomenta esta línea para enviar el formulario después de mostrar los valores
+        });
+
+        // Mostrar vista previa de la imagen seleccionada
+        document.getElementById('fotoCandidato').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('fotoPreview').src = e.target.result;
+                    document.getElementById('fotoPreview').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('fotoPreview').style.display = 'none';
+            }
+        });
+    });
+</script>
+</body>
+</html>

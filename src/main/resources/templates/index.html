@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesión como estudiante</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/index.css">
+    <style>
+        /* Agrega estilos personalizados para el modal de alerta */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            z-index: 1050;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-md-5 custom-container d-flex align-items-center">
+            <!-- Formulario de inicio de sesión -->
+            <div class="text-center p-3 w-100">
+                <h2>Iniciar sesión como estudiante</h2>
+                <p>Para votar, ingresa tu número de cédula y selecciona tu opción. Una vez que hayas votado, no podrás volver a iniciar sesión.</p>
+                <img src="/img/image-removebg-preview.png" alt="Imagen" width="450">
+                <form action="/votar/iniciar" method="POST">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                    <span class="input-group-text">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                             viewBox="0 0 24 24" fill="none">
+                            <path d="M7 8.5L9.94202 10.2394C11.6572 11.2535 12.3428 11.2535 14.058 10.2394L17 8.5"
+                                  stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                            <path d="M2.01577 13.4756C2.08114 16.5412 2.11383 18.0739 3.24496 19.2094C4.37608 20.3448 5.95033 20.3843 9.09883 20.4634C11.0393 20.5122 12.9607 20.5122 14.9012 20.4634C18.0497 20.3843 19.6239 20.3448 20.7551 19.2094C21.8862 18.0739 21.9189 16.5412 21.9842 13.4756C22.0053 12.4899 22.0053 11.5101 21.9842 10.5244C21.9189 7.45886 21.8862 5.92609 20.7551 4.79066C19.6239 3.65523 18.0497 3.61568 14.9012 3.53657C12.9607 3.48781 11.0393 3.48781 9.09882 3.53656C5.95033 3.61566 4.37608 3.65521 3.24495 4.79065C2.11382 5.92608 2.08114 7.45885 2.01576 10.5244C1.99474 11.5101 1.99475 12.4899 2.01577 13.4756Z"
+                                  stroke="#ffffff" stroke-width="1.5" stroke-linejoin="round"></path>
+                        </svg>
+                    </span>
+                            </div>
+                            <input id="documento_field" class="form-control" type="text" name="documento"
+                                   title="Documento de identidad" placeholder="Número de documento" required>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" type="submit" title="Iniciar sesión">Iniciar sesión</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-7 custom-container d-flex align-items-center">
+            <div class="results-summary-container p-3 w-100">
+                <div class="confetti">
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                    <div class="confetti-piece"></div>
+                </div>
+                <div class="results-summary-container__result text-center">
+                    <div class="heading-tertiary"><h2>Eleciones</h2></div>
+                    <div class="result-box mx-auto">
+                        <div class="heading-primary">2024</div>
+                        <p class="result">mayo</p>
+                    </div>
+                    <div class="heading-secondary">¡Excelente!</div>
+                    <p class="paragraph">
+                        Has votado conscientemente. ¡Gracias por participar en el proceso electoral!
+                    </p>
+                </div>
+                <div class="results-summary-container__options text-center">
+                    <img src="/img/Logo_de_las_Unidades_Tecnológicas_de_Santander.svg.png" alt="Imagen de las elecciones" width="320">
+                    <div class="heading-secondary heading-secondary--blue"><h2>Elecciones de Representantes 2024</h2></div>
+                    <div class="info_elecion">
+                        <p>Fecha de las Elecciones: 30 de mayo de 2024</p>
+                        <p>Instituto Electoral: Unidades Tecnologicas de Santander</p>
+                        <p>Horario de Votación: Viernes de 8 am a 4Pm</p>
+                        <p>Lugar de Votación: Bucaramanga Santander</p>
+                    </div>
+                    <div class="summary__cta">
+                        <button class="btn btn__continue"><a href="/admin/login" class="nav-link active" style="color: white;">Configurar</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center p-3 w-100 alert-message">
+    <p th:text="${alertMessage}" class="alert alert-danger"></p>
+</div>
+
+
+<!-- Agrega Bootstrap y otros elementos HTML -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // Comprueba si la página contiene un mensaje de error
+    let errorMessage = document.querySelector('.alert-message');
+
+    // Si se encuentra un mensaje de error, muestra la alerta
+    if (errorMessage && errorMessage.innerText.trim() !== "") {
+        // Mostrar la alerta
+        alert(errorMessage.innerText);
+    }
+</script>
+
+</body>
+</html>
+

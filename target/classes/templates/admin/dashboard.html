@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Enlace a Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="/dashboard.css">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Menú lateral -->
+        <nav id="sidebar" class="col-md-2 d-none d-md-block sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="loadComponent('home')">
+                            <i class="fas fa-home"></i> Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-cog"></i> Configuración
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="#" onclick="loadComponent('cambiarPassword')"><i class="fas fa-key"></i>
+                                Cambiar Contraseña</a></li>
+                            <li><a href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+                  <li class="nav-item">
+                                   <a class="nav-link" href="/admin/resultados">
+                                    <i class="fas fa-vote-yea"></i> Resultados
+                                    </a>
+                           </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="toggleSubMenu('candidatesSubMenu')">
+                            <i class="fas fa-user-cog"></i> Configurar Candidatos
+                        </a>
+                        <ul id="candidatesSubMenu" class="submenu" style="display: none;">
+                            <li><a href="/admin/listar_candidatos"><i class="fas fa-list"></i> Listar Candidatos</a>
+                            </li>
+                            <li><a href="#" onclick="loadComponent('registro_candidatos')"><i
+                                    class="fas fa-user-plus"></i> Registrar Candidatos</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="toggleSubMenu('studentsSubMenu')">
+                            <i class="fas fa-users"></i> Gestionar Estudiantes
+                        </a>
+                        <ul id="studentsSubMenu" class="submenu" style="display: none;">
+                            <li><a href="/admin/students/list"><i class="fas fa-list"></i> Listar Estudiantes</a></li>
+                            <li><a href="#" onclick="loadComponent('registerStudent')"><i class="fas fa-user-plus"></i>
+                                Registrar Estudiante</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Contenido de la página -->
+        <main id="content" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <!-- Aquí se cargará el contenido del componente -->
+        </main>
+    </div>
+</div>
+
+<!-- Scripts de Bootstrap y jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Script personalizado para cargar los componentes -->
+<script>
+    $(document).ready(function () {
+        // Cargar el componente 'home' al cargar la página por primera vez
+        loadComponent('home');
+    });
+
+    function loadComponent(componentName) {
+        $.ajax({
+            url: '/loadComponent',
+            type: 'GET',
+            data: {componentName: componentName},
+            success: function (response) {
+                $('#content').html(response);
+                // Actualizar el marcador de la ubicación actual
+                $('.nav-link').removeClass('active');
+                $('.nav-link[onclick="loadComponent(\'' + componentName + '\')"]').addClass('active');
+            },
+            error: function () {
+                alert('Error cargando componente');
+            }
+        });
+    }
+
+    function toggleSubMenu(subMenuId) {
+        var subMenu = document.getElementById(subMenuId);
+        if (subMenu.style.display === "none") {
+            subMenu.style.display = "block";
+        } else {
+            subMenu.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

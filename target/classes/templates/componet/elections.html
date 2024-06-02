@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configurar las Elecciones</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Enlace a Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="/elecciones.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-4">Configurar las Elecciones</h1>
+    <form id="configurarEleccionesForm">
+        <div class="form-group">
+            <label for="nombreEleccion">Nombre de la Elección</label>
+            <input type="text" class="form-control" id="nombreEleccion" placeholder="Nombre de la Elección" required>
+        </div>
+        <div class="form-group">
+            <label for="fechaInicio">Fecha de Inicio</label>
+            <input type="date" class="form-control" id="fechaInicio" required>
+        </div>
+        <div class="form-group">
+            <label for="horaInicio">Hora de Inicio</label>
+            <input type="time" class="form-control" id="horaInicio" required>
+        </div>
+        <div class="form-group">
+            <label for="fechaFin">Fecha de Fin</label>
+            <input type="date" class="form-control" id="fechaFin" required>
+        </div>
+        <div class="form-group">
+            <label for="horaFin">Hora de Fin</label>
+            <input type="time" class="form-control" id="horaFin" required>
+        </div>
+        <div class="form-group">
+            <label for="activo">Estado de la Elección</label>
+            <select class="form-control" id="activo">
+                <option value="activo">Activa</option>
+                <option value="inactiva">Inactiva</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="instituto">Instituto</label>
+            <input type="text" class="form-control" id="instituto" placeholder="Nombre del Instituto" required>
+        </div>
+        <div class="form-group">
+            <label for="ciudad">Ciudad</label>
+            <input type="text" class="form-control" id="ciudad" placeholder="Ciudad" required>
+        </div>
+        <div class="form-group">
+            <label for="barrio">Barrio</label>
+            <input type="text" class="form-control" id="barrio" placeholder="Barrio" required>
+        </div>
+        <div class="form-group">
+            <label for="direccion">Dirección</label>
+            <input type="text" class="form-control" id="direccion" placeholder="Dirección" required>
+        </div>
+        <div class="form-group">
+            <label for="descripcion">Descripción</label>
+            <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción de las elecciones"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="reglas">Reglas</label>
+            <textarea class="form-control" id="reglas" rows="3" placeholder="Reglas de las elecciones"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="informacion">Información Adicional</label>
+            <textarea class="form-control" id="informacion" rows="3" placeholder="Información adicional"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="logoInstituto">Logo del Instituto</label>
+            <input type="file" class="form-control-file" id="logoInstituto">
+        </div>
+        <div class="form-group">
+            <label for="fotoEleccion">Foto/Banner de la Elección</label>
+            <input type="file" class="form-control-file" id="fotoEleccion">
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="button" class="btn btn-danger" onclick="eliminarEleccion()">Eliminar</button>
+    </form>
+</div>
+
+<!-- Scripts de Bootstrap y jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Script personalizado para manejar el formulario -->
+<script>
+    $(document).ready(function() {
+        $('#configurarEleccionesForm').on('submit', function(event) {
+            event.preventDefault();
+            // Aquí puedes agregar la lógica para enviar los datos del formulario al servidor
+            alert('Datos del formulario guardados');
+        });
+    });
+
+    function eliminarEleccion() {
+        if (confirm('¿Estás seguro de que deseas eliminar esta elección?')) {
+            // Aquí puedes agregar la lógica para eliminar la elección
+            alert('Elección eliminada');
+        }
+    }
+</script>
+</body>
+</html>

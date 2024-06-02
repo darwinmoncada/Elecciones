@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados de Elecciones</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Enlace a Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <style>
+        /* Agrega estilos personalizados aquí según sea necesario */
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-3 ">
+    <div class="container-fluid">
+        <div class="btn-container">
+            <a href="/admin/dashboard" class="btn btn-secondary">
+                <i class="material-icons">arrow_back</i> Volver
+            </a>
+        </div>
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ganador de Secretario</h5>
+                    <!-- Incluir la imagen en base64 -->
+                    <img class="card-img-top" th:src="'data:image/jpeg;base64,' + ${ganadorSecretario.fotoBase64}" alt="Foto del ganador de Secretario">
+                    <p class="card-text">Nombre: <span th:text="${ganadorSecretario.nombre}"></span></p>
+                    <p class="card-text">Número de Votos: <span th:text="${ganadorSecretario.votos}"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Ganador de Personería</h5>
+                    <!-- Incluir la imagen en base64 -->
+                    <img class="card-img-top" th:src="'data:image/jpeg;base64,' + ${ganadorPersoneria.fotoBase64}" alt="Foto del ganador de Personería">
+                    <p class="card-text">Nombre: <span th:text="${ganadorPersoneria.nombre}"></span></p>
+                    <p class="card-text">Número de Votos: <span th:text="${ganadorPersoneria.votos}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección para mostrar los resultados de los demás candidatos -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h3>Resultados de Secretarios</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Puesto</th>
+                    <th>Nombre</th>
+                    <th>Número de Votos</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Iterar sobre la lista de candidatos secretarios ordenados por votos -->
+                <tr th:each="candidato, iterStat : ${secretarios}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${candidato.nombre}"></td>
+                    <td th:text="${candidato.votos}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h3>Resultados de Personeros</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Puesto</th>
+                    <th>Nombre</th>
+                    <th>Número de Votos</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Iterar sobre la lista de candidatos personeros ordenados por votos -->
+                <tr th:each="candidato, iterStat : ${personeros}">
+                    <td th:text="${iterStat.index + 1}"></td>
+                    <td th:text="${candidato.nombre}"></td>
+                    <td th:text="${candidato.votos}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts de Bootstrap y jQuery (si es necesario) -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></

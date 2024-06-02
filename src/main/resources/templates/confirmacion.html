@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmación</title>
+</head>
+<body>
+<h1>Confirmación de Voto</h1>
+<p>${mensaje}</p>
+<form action="/votar/terminar" method="post">
+    <input type="hidden" name="studentId" value="${student.id}">
+    <button type="submit">Finalizar</button>
+</form>
+</body>
+</html>

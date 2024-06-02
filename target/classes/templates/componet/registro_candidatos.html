@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Candidatos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-size: 1.1rem;
+        }
+
+        .container {
+            max-width: 550px;
+            margin-top: 40px; /* Margen superior para centrar el formulario verticalmente */
+        }
+
+        .form-group label {
+            font-size: 1.2rem;
+        }
+
+        .form-control,
+        .form-control-file,
+        select.form-control { /* Aumentar tamaño del input select */
+            font-size: 30px; /* Tamaño aumentado del input */
+            padding: 0.75rem;
+        }
+
+        .btn-primary {
+            font-size: 1.1rem;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease; /* Efecto de transición */
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9; /* Color de fondo al pasar el ratón */
+            border-color: #0062cc; /* Color del borde al pasar el ratón */
+        }
+
+        .form-group {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-4">Registrar Candidatos</h1>
+    <form id="registroCandidatosForm" action="/admin/registerCandidate" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="nombreCandidato">Nombre del Candidato</label>
+            <input type="text" class="form-control" id="nombreCandidato" name="nombreCandidato" placeholder="Nombre del Candidato" required>
+        </div>
+        <div class="form-group">
+            <label for="eslogan">Eslogan</label>
+            <input type="text" class="form-control" id="eslogan" name="eslogan" placeholder="Eslogan" required>
+        </div>
+        <div class="form-group">
+            <label for="categoria">Categoría</label>
+            <select class="form-control" id="categoria" name="categoria" required>
+                <option value="">Selecciona una Categoría</option>
+                <option value="Personería">Personería</option>
+                <option value="Secretario">Secretario</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="fotoCandidato">Foto del Candidato (PNG)</label>
+            <input type="file" class="form-control-file" id="fotoCandidato" name="fotoCandidato" accept="image/png" required>
+        </div>
+        <button type="submit" class="btn btn-primary mb-3">Registrar</button>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

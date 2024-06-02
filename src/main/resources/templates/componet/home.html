@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Inicio</title>
+    <!-- Enlace a Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Enlace a Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+        }
+        .card {
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.77);
+        }
+        .welcome {
+            margin-top: 20px;
+            margin-bottom: 40px;
+        }
+        .btn-group-custom {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+        .btn-custom {
+            transition: background-color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #007bff;
+        }
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container main-content">
+    <div class="welcome text-center">
+        <h1 class="display-4">Bienvenido al Panel de Administración</h1>
+        <p class="lead">Administre de manera eficiente las elecciones y la información de los estudiantes.</p>
+    </div>
+
+    <!-- Tarjetas con enlaces de configuración -->
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-user-cog"></i> Configurar Candidatos</h5>
+                    <p class="card-text">Administre configue los Candidatos</p>
+                    <div class="btn-group-custom">
+                        <a href="/admin/listar_candidatos" class="btn btn-primary btn-custom">Listar </a>
+                        <a href="#" class="btn btn-primary btn-custom" onclick="loadComponent('registro_candidatos')">Registrar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-users"></i> Gestionar Estudiantes</h5>
+                    <p class="card-text">Administre la información de los estudiantes.</p>
+                    <div class="btn-group-custom">
+                        <a href="/admin/students/list" class="btn btn-primary btn-custom" >Listar Estudiantes</a>
+                        <a href="#" class="btn btn-primary btn-custom" onclick="loadComponent('registerStudent')">Registrar Estudiante</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-chart-line"></i> Información de Elecciones</h5>
+                    <p class="card-text">Revise las estadísticas y resultados de las elecciones.</p>
+                    <div class="btn-group-custom">
+                        <a href="/admin/resultados" class="btn btn-primary btn-custom">Ver Resultados</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <p>Sistema de Votaciones para Representantes - Todos los derechos reservados &copy; 2024</p>
+    </div>
+</footer>
+
+<!-- Scripts de Bootstrap y jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Script personalizado para cargar los componentes -->
+<script>
+    function loadComponent(componentName) {
+        $.ajax({
+            url: '/loadComponent',
+            type: 'GET',
+            data: { componentName: componentName },
+            success: function(response) {
+                $('#content').html(response);
+            },
+            error: function() {
+                alert('Error loading component');
+            }
+        });
+    }
+</script>
+</body>
+</html>
